@@ -1,0 +1,131 @@
+% !TEX TS-program = XeLaTeX
+%! TeX program = xelatex
+
+\documentclass[xetex,aspectratio=169,xcolor,professionalfonts,hyperref]{beamer}
+\title{Latent Structure Models \\ For NLP}
+\author{André~F.~T. Martins\inst{1,2,3} \and Tsvetomila Mihaylova\inst{1,2} \and Nikita Nangia\inst{4}\\ \and Vlad Niculae\inst{1,2}}
+\institute{\inst{1}Instituto de Telecomunicações \and \inst{2}Instituto Superior Técnico \and \inst{3}Unbabel \and \inst{4}New York University}
+
+\usepackage{booktabs}
+\usepackage[export]{adjustbox}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{forest}
+\forestset{
+    nice empty nodes/.style={
+        for tree={
+            s sep=0.1em,
+            l sep=0.33em,
+            inner ysep=0.4em,
+            inner xsep=0.05em,
+            l=0,
+            calign=midpoint,
+            fit=tight,
+            where n children=0{
+               tier=word,
+               minimum height=1.25em,
+            }{},
+            where n children=2{
+               l-=1em,
+            }{},
+            parent anchor=south,
+            child anchor=north,
+            delay={if content={}{
+                    inner sep=0pt,
+                    edge path={\noexpand\path [\forestoption{edge}]
+                    			(!u.parent anchor)
+                               -- (.south)\forestoption{edge label};}
+                }{}}
+        },
+    },
+}
+
+\usetheme{light19}
+\input{preamble}
+\input{commondraw}
+
+\definecolor{vladcol}{rgb}{0.56, 0.27, 0.52}
+\definecolor{tsvmcol}{rgb}{0.27, 0.52, 0.56}
+\usepackage{setspace}
+\newcommand{\vlad}[1]{\textcolor{vladcol}{\scriptsize\setstretch{0.5} [VN: #1]\\}}
+\newcommand{\tsvm}[1]{\textcolor{tsvmcol}{\scriptsize\setstretch{0.5} [TM: #1]\\}}
+\newcommand{\andre}[1]{\textcolor{blue}{\scriptsize\setstretch{0.5} [AM: #1]\\}}
+\usepackage{comment}
+
+
+
+% This fixed the magyar error that I was getting.
+% It may be an incompatibility between beamer and subfig.
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+
+\begin{document}
+
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+\node[anchor=south,font={\color{myfg}\usebeamerfont{author}}]
+    at ($(current page.center) + (0, 2)$) {\cartoonSparse{}};
+
+\node[font={\color{tBleu}\usebeamerfont{title}},align=center] at ($(current
+page.center) + (0, 1)$) {%
+Latent Structure Models\\for NLP};
+
+\node[anchor=north,align=center,font={\color{myfg}\usebeamerfont{author}}]
+    at ($(current page.center) - (0, 1)$)
+{
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{r l}
+André Martins         &\small \textcolor{mygr}{Instituto de Telecomunicações \& IST \& Unbabel} \\
+Tsvetomila Mihaylova  &\small \textcolor{mygr}{Instituto de Telecomunicações} \\
+Nikita Nangia         &\small \textcolor{mygr}{NYU} \\
+Vlad Niculae          &\small \textcolor{mygr}{Instituto de Telecomunicações} \\
+\end{tabular}
+};
+\node[anchor=south,font={\color{mygr}\footnotesize}]
+    at (current page.south)
+{
+\emoji{githubfg} \href{https://deep-spin.github.io/tutorial}{\tt deep-spin.github.io/tutorial}
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{comment}
+\begin{frame}
+\centering
+The color pallette contains \\
+{
+\bfseries
+{\color{tPink} tPink}\\
+{\color{tYoung} tYoung} {\color{mygr}{(mygr)}}\\
+{\color{tGreen} tGreen}\\
+{\color{tBleu} tBleu}\\
+{\color{tDY} tDY}\\
+}
+
+{\small
+Based on \url{https://www.colourlovers.com/palette/4636013/almost_spring}.
+}
+\end{frame}
+\end{comment}
+
+\section{Introduction}
+\input{100}
+\section{Reinforcement learning methods}
+\input{200}
+\section{Gradient surrogates}
+\input{300}
+\section{End-to-end differentiable relaxations}
+\input{400}
+\section{Conclusions}
+\input{500}
+
+
+\begin{frame}[t,allowframebreaks]
+\frametitle{References}
+\scriptsize
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\end{frame}
+
+\end{document}

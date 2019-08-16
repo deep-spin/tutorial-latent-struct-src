@@ -1,0 +1,46 @@
+\mode<presentation>
+\RequirePackage{tikz}
+\usetikzlibrary{calc}
+
+\usecolortheme{light19}
+\usefonttheme{light19}
+\useoutertheme{dark18}
+\useinnertheme{dark18}
+
+
+\setbeamersize{
+    text margin left=2pt,
+    text margin right=2pt}
+%\addtolength{\headsep}{5pt}
+%\addtolength{\footskip}{5pt}
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+\setlength{\fboxsep}{0pt}
+
+\newcommand{\colorbul}[1]{%
+
+\begin{tikzpicture}%
+\draw[fill,#1] (0,0) circle[radius=3pt];%
+\end{tikzpicture}%
+}%
+
+\newcommand{\overlaybox}[2][.66]{
+\begin{tikzpicture}[remember picture,overlay]
+    \node[rectangle,
+        draw=mybg,
+        ultra thick,
+        fill=box,
+        text=mybg,
+        align=center,
+        minimum width=5cm,
+        minimum height=3\baselineskip]
+        at ($(current page.north)!#1!(current page.south)$)
+    {#2};
+\end{tikzpicture}}
+\newcommand{\cornercite}[2][north east]{%
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=#1] at (current page.#1) 
+    {\scriptsize\citep{#2}\strut};
+\end{tikzpicture}}
+
+\mode<all>

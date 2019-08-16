@@ -1,0 +1,188 @@
+%
+%
+% Tikz: draw an envelope
+\newsavebox\envelope
+\savebox{\envelope}{
+
+\newlength\mylen
+\setlength\mylen{2cm}
+\begin{tikzpicture}[scale=.65]
+
+\coordinate (A) at (0,0);
+\coordinate (B) at (1.41\mylen,-\mylen);
+\clip
+  ([xshift=-0.5\pgflinewidth,yshift=0.5\pgflinewidth]A) --
+  ([xshift=0.5\pgflinewidth,yshift=0.5\pgflinewidth]A-|B) --
+  ([xshift=0.5\pgflinewidth,yshift=-0.5\pgflinewidth]B) --
+  ([xshift=-0.5\pgflinewidth,yshift=-0.5\pgflinewidth]B-|A) --
+  ([xshift=-0.5\pgflinewidth,yshift=0.5\pgflinewidth]A);
+\draw[mybg,fill=mygr,line cap=rect]
+  (A) -- (A-|B) -- (B) -- (B-|A) -- (A);
+\draw[mybg]
+  (B-|A) -- (0.705\mylen,-.3\mylen) -- (B);
+\draw[mybg,fill=mygr!80!mybg,rounded corners=15pt]
+  (A) -- (0.705\mylen,-0.6\mylen) -- (A-|B);
+\node[anchor=north]
+  at ($ (A)!0.5!(B|-A) $ ) {\parbox{\mylen}{}};
+\draw[mybg] (A) -- (B|-A);
+\end{tikzpicture}
+}
+%
+% output
+\newsavebox\sentoutputsmall
+\savebox{\sentoutputsmall}{%
+\begin{tikzpicture}[scale=.5,text=myfg,font=\small]
+ \draw[rounded corners,myfg,very thick] (-.5, -.5) rectangle (.5, 2.5) {};
+
+ \node[label={[label distance=.1cm]0:positive}] (pos) at (0, 2) {};
+ \node[label={[label distance=.1cm]0:neutral}] (neu) at (0, 1) {};
+ \node[label={[label distance=.1cm]0:negative}] (neg) at (0, 0) {};
+
+ \draw[fill=mybg!10!mygr] (pos) circle[radius=9pt];
+ \draw[fill=mybg!90!mygr] (neu) circle[radius=9pt];
+ \draw[fill=mybg!90!mygr] (neg) circle[radius=9pt];
+ \end{tikzpicture}
+}
+%
+\newsavebox\sentoutput
+\savebox{\sentoutput}{%
+    \begin{tikzpicture}[scale=.75,text=myfg]
+ \draw[rounded corners,myfg,very thick] (-.5, -.5) rectangle (.5, 2.5) {};
+
+ \node[label={[label distance=.25cm]0:positive}] (pos) at (0, 2) {};
+ \node[label={[label distance=.25cm]0:neutral}] (neu) at (0, 1) {};
+ \node[label={[label distance=.25cm]0:negative}] (neg) at (0, 0) {};
+
+ \draw[fill=mybg!10!mygr] (pos) circle[radius=9pt];
+ \draw[fill=mybg!90!mygr] (neu) circle[radius=9pt];
+ \draw[fill=mybg!90!mygr] (neg) circle[radius=9pt];
+ \end{tikzpicture}
+ }
+%
+% cartoon structure
+\newcommand{\cartoon}[2][1]{%
+\begin{tikzpicture}%
+\node[draw=none, minimum size=#1*1cm, regular polygon, regular polygon sides=5] (p) {};
+%
+\foreach \i/\j in {#2}%
+{
+    \draw[hlcolor, ultra thick] (p.corner \i) -- (p.corner \j);
+}
+%
+\foreach \i in {1, ..., 5}%
+{
+    \draw[myfg,fill=mybg,very thick] (p.corner \i) circle[radius=#1*5pt];
+}
+\end{tikzpicture}}
+\newcommand{\cartoonDense}[1][1]{%
+\begin{tikzpicture}%
+\node[draw=none, minimum size=#1*1cm, regular polygon, regular polygon sides=5] (p) {};
+%
+\draw[hlcolor, ultra thick, opacity=.8] (p.corner 1) -- (p.corner 2);
+\draw[hlcolor, ultra thick, opacity=.5] (p.corner 1) -- (p.corner 3);
+\draw[hlcolor, ultra thick, opacity=.7] (p.corner 1) -- (p.corner 4);
+\draw[hlcolor, ultra thick, opacity=.4] (p.corner 1) -- (p.corner 5);
+\draw[hlcolor, ultra thick, opacity=.6] (p.corner 2) -- (p.corner 3);
+\draw[hlcolor, ultra thick, opacity=.3] (p.corner 2) -- (p.corner 4);
+\draw[hlcolor, ultra thick, opacity=.9] (p.corner 2) -- (p.corner 5);
+\draw[hlcolor, ultra thick, opacity=.2] (p.corner 3) -- (p.corner 4);
+\draw[hlcolor, ultra thick, opacity=.6] (p.corner 3) -- (p.corner 5);
+\draw[hlcolor, ultra thick, opacity=.4] (p.corner 4) -- (p.corner 5);
+%
+\foreach \i in {1, ..., 5}%
+{
+    \draw[myfg,fill=mybg,very thick] (p.corner \i) circle[radius=#1*5pt];
+}
+\end{tikzpicture}}
+\newcommand{\cartoonSparse}[1][1]{%
+\begin{tikzpicture}%
+\node[draw=none, minimum size=#1*1cm, regular polygon, regular polygon sides=5] (p) {};
+%
+\draw[hlcolor, ultra thick, opacity=1] (p.corner 1) -- (p.corner 4);
+\draw[hlcolor, ultra thick, opacity=.5] (p.corner 2) -- (p.corner 5);
+\draw[hlcolor, ultra thick, opacity=.5] (p.corner 1) -- (p.corner 5);
+%
+\foreach \i in {1, ..., 5}%
+{
+    \draw[myfg,fill=mybg,very thick] (p.corner \i) circle[radius=#1*5pt];
+}
+\end{tikzpicture}}
+%
+\newcommand{\setupsimplexbary}[1][3.3]{%
+\coordinate (L1) at (0:0);
+\coordinate (L2) at (0:#1);
+\coordinate (L3) at (60:#1);
+
+\node[label=east:{\small$\triangle$}] at (L2) {};
+
+\fill[colorPolytope,opacity=.15]  (L1) -- (L2) -- (L3) -- cycle;
+\draw[very thick,colorPolytope]   (L1) -- (L2) -- (L3) -- cycle;
+
+\draw[colorPolytope,fill] (L1) circle[radius=3pt];
+\draw[colorPolytope,fill] (L2) circle[radius=3pt];
+\draw[colorPolytope,fill] (L3) circle[radius=3pt];
+}
+
+\newcommand{\drawcs}{%
+\node[anchor=south] at (0, \vecheight*4) {$z=1$};
+\node[anchor=south] at (0, \vecheight*3) {$z=2$};
+\node[anchor=south] at (0, \vecheight*1.5) {$\cdots$};
+\node[anchor=south] at (0, \vecheight*0) {$z=N$};}
+
+\newcommand{\drawscores}[1][\s]{%
+\node[anchor=south] at (-1-.5*\vecwidth, \vecheight*5+.1) {$#1$};
+\draw[elem,fill=vecfg!60!vecbg] (-1-\vecwidth, \vecheight*4) rectangle (-1, \vecheight*5);
+\draw[elem,fill=vecfg!85!vecbg] (-1-\vecwidth, \vecheight*3) rectangle (-1, \vecheight*4);
+\draw[elem,fill=vecfg!60!vecbg] (-1-\vecwidth, \vecheight*2) rectangle (-1, \vecheight*3);
+\draw[elem,fill=vecfg!75!vecbg] (-1-\vecwidth, \vecheight*1) rectangle (-1, \vecheight*2);
+\draw[elem,fill=vecfg!50!vecbg] (-1-\vecwidth, \vecheight*0) rectangle (-1, \vecheight*1);
+}
+
+\newcommand{\drawargmax}[1][\p]{%
+\node[anchor=south] at (1+.5*\vecwidth, \vecheight*5+.1) {$#1$};
+\draw[elem,fill=vecfg! 0!vecbg]  (1, \vecheight*4) rectangle (1+\vecwidth, \vecheight*5);
+\draw[elem,fill=vecfg!70!vecbg]  (1, \vecheight*3) rectangle (1+\vecwidth, \vecheight*4);
+\draw[elem,fill=vecfg! 0!vecbg]  (1, \vecheight*2) rectangle (1+\vecwidth, \vecheight*3);
+\draw[elem,fill=vecfg! 0!vecbg]  (1, \vecheight*1) rectangle (1+\vecwidth, \vecheight*2);
+\draw[elem,fill=vecfg! 0!vecbg]  (1, \vecheight*0) rectangle (1+\vecwidth, \vecheight*1);
+}
+\newcommand{\drawsoftmax}[1][\p]{%
+\node[anchor=south] at (1+.5*\vecwidth, \vecheight*5+.1) {$#1$};
+\draw[elem,fill=vecfg!30!vecbg]  (1, \vecheight*4) rectangle (1+\vecwidth, \vecheight*5);
+\draw[elem,fill=vecfg!50!vecbg]  (1, \vecheight*3) rectangle (1+\vecwidth, \vecheight*4);
+\draw[elem,fill=vecfg!35!vecbg]  (1, \vecheight*2) rectangle (1+\vecwidth, \vecheight*3);
+\draw[elem,fill=vecfg!25!vecbg]  (1, \vecheight*1) rectangle (1+\vecwidth, \vecheight*2);
+\draw[elem,fill=vecfg!15!vecbg]  (1, \vecheight*0) rectangle (1+\vecwidth, \vecheight*1);
+}
+
+%% Utilities to draw certain structures more easily
+
+\newcommand{\postag}[3]{%
+\begin{tabular}{c c c}%
+{\color{hlcolor}\footnotesize #1}&%
+{\color{hlcolor}\footnotesize #2}&%
+{\color{hlcolor}\footnotesize #3}\\%
+dog & on & wheels\\\end{tabular}}
+
+\newcommand{\simpledep}[2]{%
+\begin{dependency}[edge style={hlcolor,very thick},hide label,arc edge]%
+\begin{deptext}[column sep=.3cm]#1\end{deptext}%
+#2%
+\end{dependency}}
+
+\newcommand{\matching}[1]{%
+\begin{tikzpicture}%
+\node[anchor=east] at (0, 1) (s1) {dog};
+\node[anchor=east] at (0, 0.5) (s2) {on};
+\node[anchor=east] at (0, 0) (s3) {wheels};
+%
+\node[anchor=west] at (0.6, 1) (t1) {hond};
+\node[anchor=west] at (0.6, 0.5) (t2) {op};
+\node[anchor=west] at (0.6, 0) (t3) {wielen};
+%
+\foreach[count=\i] \j in {#1}%
+\draw[hlcolor,very thick,
+      {Circle[length=1mm,width=1mm]}-{Circle[length=1mm, width=1mm]}]
+      (s\i.east) -- (t\j.west);
+\end{tikzpicture}}
+

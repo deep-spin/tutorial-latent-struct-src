@@ -1,0 +1,59 @@
+\defbeamertemplate*{title page}{customized}[1][]
+{
+    {\centering\usebeamerfont{title}\color{mytitle}\inserttitle\par}
+    \bigskip
+    {\centering\usebeamerfont{subtitle}\insertsubtitle\par}
+    \medskip
+    {\centering\usebeamerfont{author}\insertauthor\par}
+}
+
+\defbeamertemplate*{frametitle}{customized}[1]{
+\vspace{15pt}
+\nointerlineskip
+\parbox{\linewidth}{\centering \strut\insertframetitle%
+\ifx\insertframesubtitle\empty
+%nothing
+\else
+\\ \strut\usebeamerfont{framesubtitle}\insertframesubtitle%
+\fi
+}%
+}
+
+\setbeamertemplate{footline}{%
+\strut\color{mylightgr}\scriptsize%
+%\hspace{1em}%
+\emoji{githubfg}%
+\href{https://deep-spin.github.io/tutorial}{\tt deep-spin.github.io/tutorial}%
+\hfill%
+\insertframenumber~~%
+}
+\setbeamertemplate{navigation symbols}{}
+
+%white frame
+\newcommand{\whiteframe}[1]{{%
+\setbeamercolor{background canvas}{bg=white}
+\setbeamercolor{normal text}{fg=mygr}
+\setbeamercolor{frametitle}{fg=mybg}
+\usebeamercolor[fg]{frametitle}
+\usebeamercolor[fg]{normal text}
+\begin{frame}
+#1
+\end{frame}
+}}
+
+% simple attention-grabbing separator slide (interruption)
+\newcommand{\sepframe}[2][box]{%
+{
+\setbeamercolor{normal text}{fg=mybg,bg=#1}
+  \begin{frame}[noframenumbering,plain]
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[font={\usebeamerfont{title}\color{mybg}},
+        %\node[font={\Huge\color{mybg}\selectfont},
+            text width=10cm,
+            text badly centered] at (current page.center)
+        {\expandafter{#2}};
+    \end{tikzpicture}
+  \end{frame}
+}}
+
+

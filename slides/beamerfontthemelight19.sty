@@ -1,0 +1,81 @@
+\RequirePackage{amsmath}
+\RequirePackage{arevmath}  % most of this gets overridden, but makes {}() nice
+\RequirePackage{microtype}
+\RequirePackage[cal=pxtx]{mathalfa}
+\RequirePackage{amsfonts}
+\RequirePackage{amsmath}
+\RequirePackage{mathtools}
+\RequirePackage{mathspec}
+
+\defaultfontfeatures{Mapping=tex-text,Ligatures=TeX}
+\setsansfont[
+  BoldFont={Lato Black},
+  BoldItalicFont={Lato Black Italic}]{Lato Medium}
+\setmonofont{Space Mono}
+\setmathfont(Digits,Latin)[Numbers={Lining,Proportional}]{Lato Medium}
+
+% pleasant neq 
+\def\neq{\mathrel{\ooalign{$=$\cr\hidewidth$/$\hidewidth\cr}}}
+
+\makeatletter
+%\DeclareMathSymbol{\not}{\mathrel}{symbols}{54}%2260
+\AtBeginDocument{%
+% use equals and plus and minus from font
+\Umathcode`=="2 \csname symLatin:m:n\endcsname `=
+\Umathcode`+="2 \csname symLatin:m:n\endcsname `+
+\XeTeXDeclareMathSymbol{-}{\mathbin}{\eu@DigitsArabic@symfont}{"2212}%
+}
+\makeatother
+
+\setbeamerfont{title}{series=\bfseries,size*={30}{32}}
+\setbeamerfont{subtitle}{series=\normalfont,size*={13}{14}}
+\setbeamerfont{author}{size*={13}{14}}
+
+\setbeamerfont{frametitle}{series=\bfseries,size*={20}{20}}
+\setbeamerfont{framesubtitle}{size*={16}{22},series=\normalfont}
+
+\setbeamerfont{normal text}{size*={16}{20}}
+\setbeamerfont{block title}{size*={17}{20}}
+\setbeamerfont{block body}{size*={16}{20}}
+
+\AtBeginDocument{\usebeamerfont{normal text}}
+
+\setbeamertemplate{itemize/enumerate body begin}{\fontsize{12}{16}\selectfont}
+\setbeamertemplate{itemize/enumerate subbody begin}{\fontsize{10}{16}\selectfont}
+
+
+
+% Below is some old attempt at redefining most symbols from scratch.
+% I then realized it's easier to just include arevmath
+% \Umathcode`=="2 \csname symLatin:m:n\endcsname `=
+% \Umathcode`+="2 \csname symLatin:m:n\endcsname `+
+% \Umathcode`×="3 \csname symLatin:m:n\endcsname `× \def\times{×}
+% \Umathcode`↦="3 \csname symLatin:m:n\endcsname `↦ \def\mapsto{↦}
+% \Umathcode`∂="0 \csname symLatin:m:n\endcsname `∂ \def\partial{∂}
+% \Umathcode`∅="0 \csname symLatin:m:n\endcsname `∅ \def\emptyset{∅}
+% \Umathcode`∈="2 \csname symLatin:m:n\endcsname `∈ \def\in{∈}
+% \Umathcode`∫="1 \csname symLatin:m:n\endcsname `∫ \def\intop{∫}
+% \Umathcode`⊂="2 \csname symLatin:m:n\endcsname `⊂ \def\subset{⊂}
+% \Umathcode`∑="1 \csname symLatin:m:n\endcsname `∑ \def\sum{∑}
+% 
+% \makeatletter
+% \ernewcommand\eu@MathPunctuation@symfont{Latin:m:n}
+% \DeclareMathSymbol{,}{\mathpunct}{\eu@MathPunctuation@symfont}{`,}
+% \DeclareMathSymbol{.}{\mathord}{\eu@MathPunctuation@symfont}{`.}
+% \DeclareMathSymbol{<}{\mathrel}{\eu@MathPunctuation@symfont}{`<}
+% \DeclareMathSymbol{>}{\mathrel}{\eu@MathPunctuation@symfont}{`>}
+% \DeclareMathSymbol{/}{\mathord}{\eu@MathPunctuation@symfont}{`/}
+% \DeclareMathSymbol{;}{\mathpunct}{\eu@MathPunctuation@symfont}{`;}
+% 
+% \AtBeginDocument{%
+% \XeTeXDeclareMathSymbol{^^^^2026}{\mathinner}{\eu@MathPunctuation@symfont}{"2026}[\mathellipsis]
+% \XeTeXDeclareMathSymbol{≥}{\mathrel}{\eu@MathPunctuation@symfont}{"2265}[\geq]
+% \XeTeXDeclareMathSymbol{≤}{\mathrel}{\eu@MathPunctuation@symfont}{"2264}[\leq]
+% %\XeTeXDeclareMathSymbol{≮}{\mathrel}{\eu@MathPunctuation@symfont}{"226E}[\nless]
+% %\XeTeXDeclareMathSymbol{≯}{\mathrel}{\eu@MathPunctuation@symfont}{"226F}[\ngtr]
+% %\XeTeXDeclareMathSymbol{≰}{\mathrel}{\eu@MathPunctuation@symfont}{"2270}[\nleq]
+% %\XeTeXDeclareMathSymbol{≱}{\mathrel}{\eu@MathPunctuation@symfont}{"2271}[\ngeq]
+% \XeTeXDeclareMathSymbol{-}{\mathbin}{\eu@DigitsArabic@symfont}{"2212}%
+% }
+% 
+% \makeatother

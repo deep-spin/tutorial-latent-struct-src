@@ -1,0 +1,127 @@
+\sepframe{V. Conclusions}
+\begin{frame}
+\frametitle{Is it syntax?!}
+\begin{itemize}
+\item Unlike e.g.\ unsupervised parsing, the structures we learn are guided by
+\textbf{a downstream objective} (typically discriminative).
+\item<+-> They don't typically resemble grammatical structure (yet)
+\citep{isitsyntax}\\
+\quad(future work: more inductive biases and constraints?)
+\item<+-> Common to compare latent structures with parser outputs. \\\quad But is
+this always a meaningful comparison?
+\end{itemize}
+\end{frame}
+
+\depstyle{mydep}{edge style={tPeony,thick},arc edge,hide label}
+\begin{frame}
+\frametitle{Syntax vs.\ Composition Order}
+\cornercite{sparsemapcg}
+\centering
+\uncover<2->{
+{\small $p=22.6\%$}\\
+\begin{dependency}[mydep]
+\begin{deptext}[column sep=0.3cm]
+$\star$ \& lovely \& and \& poignant \& . \\ \end{deptext}
+\depedge{3}{2}{}
+\depedge{1}{3}{}
+\depedge{3}{4}{}
+\depedge{3}{5}{}
+\end{dependency}}
+\\
+\uncover<1->{
+{\small CoreNLP parse,\quad$p=21.4\%$}\\
+\begin{dependency}[mydep]
+\begin{deptext}[column sep=0.3cm]
+$\star$ \& lovely \& and \& poignant \& . \\ \end{deptext}
+\depedge{1}{2}{}
+\depedge{2}{3}{}
+\depedge{2}{4}{}
+\depedge{2}{5}{}
+\end{dependency}}\\
+\uncover<2->{$\cdots$}
+\end{frame}
+\begin{frame}
+\frametitle{Syntax vs.\ Composition Order}
+\cornercite{sparsemapcg}
+\fontsize{9pt}{10}\selectfont%
+\centering
+\begin{columns}
+\begin{column}{.5\textwidth}
+\centering
+{$p=22.6\%$}\\
+\begin{dependency}[mydep]
+\begin{deptext}[column sep=0.3cm]
+$\star$ \& lovely \& and \& poignant \& . \\ \end{deptext}
+\depedge{3}{2}{}
+\depedge{1}{3}{}
+\depedge{3}{4}{}
+\depedge{3}{5}{}
+\end{dependency}
+\\[\baselineskip]
+{CoreNLP parse,\quad$p=21.4\%$}\\
+\begin{dependency}[mydep]
+\begin{deptext}[column sep=0.3cm]
+$\star$ \& lovely \& and \& poignant \& . \\ \end{deptext}
+\depedge{1}{2}{}
+\depedge{2}{3}{}
+\depedge{2}{4}{}
+\depedge{2}{5}{}
+\end{dependency}\\
+$\cdots$
+\end{column}
+\begin{column}{.5\textwidth}
+\centering
+{$p=15.33\%$}\\
+\begin{dependency}[mydep,arc angle=35]
+\begin{deptext}[column sep=0.3cm]
+$\star$ \& a \& deep \& and \& meaningful \& film \& . \\ \end{deptext}
+\depedge{1}{2}{1.0}
+\depedge{1}{3}{1.0}
+\depedge{1}{4}{1.0}
+\depedge{1}{5}{1.0}
+\depedge{1}{6}{1.0}
+\depedge{1}{7}{1.0}
+\end{dependency}\\[\baselineskip]
+{$p=15.27\%$}\\
+\begin{dependency}[mydep,arc angle=50]
+\begin{deptext}[column sep=0.3cm]
+$\star$ \& a \& deep \& and \& meaningful \& film \& . \\ \end{deptext}
+\depedge{4}{2}{1.0}
+\depedge{4}{3}{1.0}
+\depedge{1}{4}{1.0}
+\depedge{4}{5}{1.0}
+\depedge{4}{6}{1.0}
+\depedge{4}{7}{1.0}
+\end{dependency}\\
+{$\cdots$\\ CoreNLP parse,\quad$p=0\%$}\\
+\begin{dependency}[mydep,arc angle=35]
+\begin{deptext}[column sep=0.3cm]
+$\star$ \& a \& deep \& and \& meaningful \& film \& . \\ \end{deptext}
+\depedge{6}{2}{1.0}
+\depedge{6}{3}{1.0}
+\depedge{3}{4}{1.0}
+\depedge{3}{5}{1.0}
+\depedge{1}{6}{1.0}
+\depedge{6}{7}{1.0}
+\end{dependency}
+\end{column}
+\end{columns}
+\end{frame}
+
+\againframe<5->{overview}
+
+\begin{frame}
+\frametitle{Conclusions}
+\begin{itemize}
+\item Latent structure models are desirable for interpretability, structural bias, and higher predictive power with fewer parameters.
+\item Stochastic latent variables can be dealt with RL or straight-through gradients.
+\item Deterministic argmax requires surrogate gradients (e.g. SPIGOT).
+\item Continuous relaxations of argmax include SANs and SparseMAP.
+\item Intuitively, some of these different methods are trying to do similar
+things or require the same building blocks (e.g. SPIGOT and
+SparseMAP).\\[.5\baselineskip]
+\item ... we didn't even get into deep \emph{generative} models! These tools
+apply,\\but there are new challenges.
+\citep{corro2018differentiable,rnng2,rnng1,segm}
+\end{itemize}
+\end{frame}

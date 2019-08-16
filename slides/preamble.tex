@@ -1,0 +1,155 @@
+\usepackage{stmaryrd}
+\usepackage{nicefrac}
+\usepackage{graphicx}
+\usepackage{stackrel}
+\usepackage{anyfontsize}
+\usepackage{fontawesome}
+\usepackage{cancel}
+\usepackage{array}
+
+\usepackage{tikz-dependency}
+\usepackage{tkz-graph}
+\usepackage{pgfplots}
+\usepackage{makecell}
+
+\usepackage{natbib}
+%\usepackage[
+  %style=authoryear,
+  %backend=bibtex,
+  %url=false,
+  %doi=false,
+  %isbn=false,
+  %natbib,
+  %maxcitenames=2]{biblatex}
+
+\usepackage{algorithm}
+\usepackage{caption}
+\usepackage{setspace}
+\usepackage{algorithmicx}
+\usepackage[noend]{algpseudocode}
+\algrenewcommand\alglinenumber[1]{{\textcolor{gray}{\sf\scriptsize#1}}}
+\algrenewcommand\algorithmicindent{1.3em}%
+\renewcommand{\algorithmiccomment}[1]{\hfill\textcolor{gray}{\#~\textit{#1}}}
+\makeatletter
+\def\STATE{\State\hskip-\ALG@thistlm}
+\makeatother
+
+% emojis!
+\makeatletter
+\newcommand*\fsize{\dimexpr\f@size pt\relax}
+\makeatother
+\newcommand*\emoji[2][1]{\includegraphics[width=#1\fsize]{emoji/#2}}
+%
+%% Generic TiKZ utils!
+\usetikzlibrary{calc,backgrounds,arrows,arrows.meta}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{tikzmark,positioning,patterns}
+\usetikzlibrary{bending}
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+%
+\tikzset{
+    visible on/.style={alt={#1{}{invisible}}},
+    invisible/.style={opacity=0},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },
+  }
+
+%% particular stuff?
+\newcommand*{\ticksize}{2pt}
+\tikzset{axisline/.style={thick,myfg!50!mybg,text=myfg,font=\small}}
+\tikzset{axislabel/.style={font=\small}}
+\tikzset{point/.style={thick,tMidnight}}
+
+\tikzset{%
+    style selected/.style={
+        set fill color=tPeony!30!mybg,
+        set border color=tPeony,
+        ultra thick},
+    hor/.style={
+        above left offset={-0.15,0.31},
+        below right offset={0.15,-0.125},
+        #1
+    },
+    ver/.style={
+        above left offset={-0.1,0.35},
+        below right offset={0.13,-0.15},
+        #1
+    }
+}
+
+% semantic color definitions
+\colorlet{colorArgmax}{tBleu!90!myfg}
+\colorlet{colorSoftmax}{tGreen!80!mybg}
+\colorlet{colorSparsemax}{tPink!75!myfg}
+\colorlet{colorFusedmax}{tDarkYellow!30!mybg}
+\colorlet{colorPolytope}{mygr}
+
+
+\tikzset{
+    tinyarrowl/.style={-{Straight Barb[bend]},thick,bend left=75,tPeony},
+    tinyarrowr/.style={-{Straight Barb[bend]},thick,bend right=75,tPeony}}
+\newcommand{\miniparse}[1]{%
+{\footnotesize%
+\begin{tikzpicture}[
+    node distance=14pt,
+    every node/.style={inner sep=0,outer sep=1pt},
+    ]
+\node[tPeony] (a) at (0, 0) {\textbullet};
+\node[tPeony,right of=a] (b) {\textbullet};
+\node[tPeony,right of=b] (c) {\textbullet};
+\foreach \i/\j/\r/\o in {#1}{
+\path (\i.north) edge[tinyarrow\r,opacity=\o] (\j.north);
+}\end{tikzpicture}}}
+
+% Tikz pic: draw a cog
+\tikzset{cog/.pic={code={
+    \draw[myfg,thick,fill=mygr]
+  (0:2)
+  \foreach \i [evaluate=\i as \n using {(\i-1)*360/18}] in {1,...,18}{%
+    arc (\n:\n+10:2) {[rounded corners=1.5pt] -- (\n+10+2:2.4)
+    arc (\n+10+2:\n+360/18-2:2.4)} --  (\n+360/18:2)
+  };
+  \draw[myfg,thick,fill=mybg] (0,0) circle[radius=.5];
+}}}
+
+% math and notation
+\newcommand*\bs[1]{\boldsymbol{#1}}
+\newcommand\defeq{{\,\raisebox{1pt}{$:$}=}\,}
+\newcommand\pp{p}
+\newcommand\p{\bs{\pp}}
+\newcommand\zz{z}
+\newcommand\z{\bs{\zz}}
+\newcommand\ZZ{\mathcal{Z}}
+\newcommand\s{\bs{\ss}}
+\renewcommand\ss{s}
+\newcommand\mg{\bs{\mu}}
+\newcommand\pr{\bs{\eta}}
+\newcommand\Mp{\mathcal{M}}
+%\newcommand\parser{\pi(\z|x)}
+\newcommand\parser{\pi_{\parp}(\z \mid x)}
+\newcommand\parp{\bs{\theta}}
+\newcommand\clfp{\bs{\phi}}
+\newcommand\simplex{\triangle}
+\DeclareMathOperator*{\softmax}{softmax}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\HH}{H}
+\DeclareMathOperator{\mapo}{\hat{\bs{\p}}_{\Omega}}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\ident}{Id}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\conv}{conv}
+\newcommand\reals{\mathbb{R}}
+\newcommand\EE{\mathbb{E}}
+\newcommand\pfrac[2]{\frac{\partial #1}{\partial #2}}
+\newcommand\yhat{\hat{y}}
+
+\depstyle{mydep}{edge style={hlcolor,thick},arc edge,hide label}
+
+% smaller and gray citation
+\let\realcitep\citep
+\renewcommand*{\citep}[1]{{\scriptsize\realcitep{#1}}}
+%\newcommand*{\citeparg}[2]{{\scriptsize\parencite[][#2]{#1}}}
